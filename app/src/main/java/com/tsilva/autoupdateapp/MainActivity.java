@@ -7,6 +7,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity
 {
     String appVersion = "";
+    Update updateLib;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Update updateLib = new Update();
+        updateLib = new Update();
         appVersion = updateLib.getCurrentVersion(getApplicationContext());
     }
 
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity
     {
         String path = new UrlPathGenerator()
                 .getUserRepos(REPOSITORY_DATA.USER, REPOSITORY_DATA.REPO);
-        System.out.println("===RETRIEVING CONTENT===");
-        System.out.println("CONTENT: " + new DownloadWebContent().getContent(path));
-        System.out.println("===CONTENT RETRIEVED===");
+        JsonData jsonData = new JsonData(new DownloadWebContent().getContent(path));
+        System.out.println("IS APP OUTDATED: " + updateLib.isOutdated(jsonData));
+//        System.out.println("versionUrlMapList: " + jsonData.getVersionUrlMap());
+//        System.out.println("VERSION LIST: " + jsonData.getVersionList());
     }
 }

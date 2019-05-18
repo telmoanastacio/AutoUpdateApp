@@ -5,9 +5,11 @@ import android.content.ContextWrapper;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import java.util.List;
+
 public class Update
 {
-    String appVersion = "";
+    private String appVersion = "";
 
     public Update()
     {}
@@ -27,4 +29,36 @@ public class Update
         }
         return null;
     }
+
+    public boolean isOutdated(JsonData jsonData)
+    {
+        List<String> versionList = jsonData.getVersionList();
+        int lastElement = versionList.size() - 1;
+        String[] currentVersionStrArray = appVersion.split("\\.");
+        String[] lastVersionStrArray = versionList.get(lastElement).split("\\.");
+        boolean isCurrentVersionLower = false;
+
+        if(Integer.parseInt(lastVersionStrArray[0]) > Integer.parseInt(currentVersionStrArray[0]))
+        {
+            isCurrentVersionLower = true;
+        }
+        else if(Integer.parseInt(lastVersionStrArray[0]) == Integer.parseInt(currentVersionStrArray[0]))
+        {
+            if(Integer.parseInt(lastVersionStrArray[1]) > Integer.parseInt(currentVersionStrArray[1]))
+            {
+                isCurrentVersionLower = true;
+            }
+            else if(Integer.parseInt(lastVersionStrArray[1]) == Integer.parseInt(currentVersionStrArray[1]))
+            {
+                if(Integer.parseInt(lastVersionStrArray[2]) > Integer.parseInt(currentVersionStrArray[2]))
+                {
+                    isCurrentVersionLower = true;
+                }
+            }
+        }
+
+        return isCurrentVersionLower;
+    }
+
+    //TODO: get content and unzip
 }
