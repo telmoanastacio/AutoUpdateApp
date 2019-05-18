@@ -11,6 +11,9 @@ import javax.net.ssl.HttpsURLConnection;
 
 class DownloadWebContent extends AsyncTask<String, Void, String>
 {
+    public DownloadWebContent()
+    {}
+
     @Override
     // this method is not to be directly called
     protected String doInBackground(String[] strings)

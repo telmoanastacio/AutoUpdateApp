@@ -6,11 +6,16 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity
 {
+    String appVersion = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Update updateLib = new Update();
+        appVersion = updateLib.getCurrentVersion(getApplicationContext());
     }
 
     public void checkUpdate(View view)

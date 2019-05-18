@@ -3,6 +3,7 @@ package com.tsilva.autoupdateapp;
 public class UrlPathGenerator
 {
     public static final String API_URL = "https://api.github.com";
+
     public UrlPathGenerator()
     {}
 
