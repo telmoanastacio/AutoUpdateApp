@@ -14,5 +14,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void checkUpdate(View view)
-    {}
+    {
+        UrlPathGenerator urlPathGenerator = new UrlPathGeneratorImpl();
+        System.out.println(urlPathGenerator.getUserRepos(REPOSITORY_DATA.USER, REPOSITORY_DATA.REPO));
+    }
 }
