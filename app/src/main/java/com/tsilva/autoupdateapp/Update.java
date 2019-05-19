@@ -12,6 +12,7 @@ public class Update
     private String appVersion = "";
     private String lastVersion = "";
     private String lastVersionUrl = "";
+    private int lastVersionSize;
 
     public Update()
     {}
@@ -62,7 +63,9 @@ public class Update
         if(isCurrentVersionLower)
         {
             lastVersion = versionList.get(lastElement);
-            lastVersionUrl = jsonData.getVersionUrlMap().get(lastVersion);
+            lastVersionSize = Integer
+                    .parseInt(jsonData.getVersionUrlMap().get(lastVersion).get("size"));
+            lastVersionUrl = jsonData.getVersionUrlMap().get(lastVersion).get("apkUrl");
         }
         else
         {
@@ -77,6 +80,11 @@ public class Update
     public String getLastVersion()
     {
         return lastVersion;
+    }
+
+    public int getLastVersionSize()
+    {
+        return lastVersionSize;
     }
 
     public String getLastVersionUrl()

@@ -13,7 +13,7 @@ import java.util.Map;
 public class JsonData
 {
     private int arrSize;
-    private Map<String, String> versionUrlMap = new HashMap<>();
+    private Map<String, Map<String, String>> versionUrlMap = new HashMap<>();
 
     public JsonData(String content)
     {
@@ -25,20 +25,27 @@ public class JsonData
             for(int i = 0; i < arrSize; i++)
             {
                 String version = "";
-                String apkUrl = "";
+                Map<String, String> sizeUrlMap = null;
                 try
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     version = jsonObject.getString("tag_name");
-                    apkUrl = jsonObject
+                    String size = jsonObject
+                            .getJSONArray("assets")
+                            .getJSONObject(0)
+                            .getString("size");
+                    String apkUrl = jsonObject
                             .getJSONArray("assets")
                             .getJSONObject(0)
                             .getString("browser_download_url");
-                    versionUrlMap.put(version, apkUrl);
+                    sizeUrlMap = new HashMap<>();
+                    sizeUrlMap.put("size", size);
+                    sizeUrlMap.put("apkUrl", apkUrl);
+                    versionUrlMap.put(version, sizeUrlMap);
                 }
                 catch(JSONException e)
                 {
-                    versionUrlMap.put(version, apkUrl);
+                    versionUrlMap.put(version, sizeUrlMap);
                     e.printStackTrace();
                 }
             }
@@ -61,7 +68,7 @@ public class JsonData
         return versionList;
     }
 
-    public Map<String, String> getVersionUrlMap()
+    public Map<String, Map<String, String>> getVersionUrlMap()
     {
         return versionUrlMap;
     }
