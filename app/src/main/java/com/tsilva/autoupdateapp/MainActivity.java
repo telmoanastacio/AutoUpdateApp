@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity
         textView1 = findViewById(R.id.textView1);
 
         updateLib = new Update();
-        textView1.setText("Current version: " + updateLib.getCurrentVersion(getApplicationContext()));
+        textView1.setText("current version: "
+                + updateLib.getCurrentVersion(getApplicationContext()) + "\n");
     }
 
     public void checkUpdate(View view)
@@ -30,5 +31,15 @@ public class MainActivity extends AppCompatActivity
         System.out.println("IS APP OUTDATED: " + updateLib.isOutdated(jsonData));
 //        System.out.println("versionUrlMapList: " + jsonData.getVersionUrlMap());
 //        System.out.println("VERSION LIST: " + jsonData.getVersionList());
+        int lastVersionIndex = jsonData.getVersionList().size() - 1;
+        if(updateLib.isOutdated(jsonData))
+        {
+            textView1.setText("current version: "
+                    + updateLib.getCurrentVersion(getApplicationContext())
+                    + "\nupdate available: " + jsonData.getVersionList().get(lastVersionIndex));
+        }
     }
+
+    public void update(View view)
+    {}
 }
