@@ -3,11 +3,12 @@ package com.tsilva.autoupdateapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
 {
-    String appVersion = "";
     Update updateLib;
+    TextView textView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -15,8 +16,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        textView1 = findViewById(R.id.textView1);
+
         updateLib = new Update();
-        appVersion = updateLib.getCurrentVersion(getApplicationContext());
+        textView1.setText("Current version: " + updateLib.getCurrentVersion(getApplicationContext()));
     }
 
     public void checkUpdate(View view)
