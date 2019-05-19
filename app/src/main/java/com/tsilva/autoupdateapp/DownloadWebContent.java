@@ -2,6 +2,7 @@ package com.tsilva.autoupdateapp;
 
 import android.os.AsyncTask;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -54,6 +55,17 @@ class DownloadWebContent extends AsyncTask<String, Void, String>
             {
                 e.printStackTrace();
                 return null;
+            }
+            finally
+            {
+                try
+                {
+                    in.close();
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
         return null;

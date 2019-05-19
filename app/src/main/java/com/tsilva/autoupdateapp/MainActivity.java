@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity
 {
     Update updateLib;
@@ -48,8 +50,26 @@ public class MainActivity extends AppCompatActivity
     {
         LinearLayout linearLayout2 = findViewById(R.id.linearLayout2);
         linearLayout2.setVisibility(View.VISIBLE);
-//        ProgressBar progressBar1 = findViewById(R.id.progressBar1);
-//        progressBar1.setMax(100);
-//        progressBar1.setProgress(30);
+        ProgressBar progressBar1 = findViewById(R.id.progressBar1);
+        System.out.println("=== DOWNLOADING UPDATE ===");
+        DownloadFileContent downloadFileContent = new DownloadFileContent();
+        downloadFileContent.setSizeBytes(updateLib.getLastVersionSize());
+        downloadFileContent.setProgressBar(progressBar1);
+        byte[] data = null;
+        try
+        {
+            data = downloadFileContent.execute(updateLib.getLastVersionUrl()).get();
+        }
+        catch(InterruptedException | ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+//        System.out.println("===DATA===\n\n");
+//        for(byte bin : data)
+//        {
+//            System.out.print((char) bin);
+//        }
+//        System.out.println("\n\n===END DATA===");
+        System.out.println("=== FINISHED DOWNLOADING UPDATE ===");
     }
 }
