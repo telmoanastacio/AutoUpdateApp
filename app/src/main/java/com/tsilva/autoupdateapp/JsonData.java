@@ -24,15 +24,21 @@ public class JsonData
 
             for(int i = 0; i < arrSize; i++)
             {
+                String version = "";
+                String apkUrl = "";
                 try
                 {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String version = jsonObject.getString("tag_name");
-                    String apkZipUrl = jsonObject.getString("zipball_url");
-                    versionUrlMap.put(version, apkZipUrl);
+                    version = jsonObject.getString("tag_name");
+                    apkUrl = jsonObject
+                            .getJSONArray("assets")
+                            .getJSONObject(0)
+                            .getString("browser_download_url");
+                    versionUrlMap.put(version, apkUrl);
                 }
                 catch(JSONException e)
                 {
+                    versionUrlMap.put(version, apkUrl);
                     e.printStackTrace();
                 }
             }
