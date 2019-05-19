@@ -52,8 +52,7 @@
             android:paddingTop="6dp"
             android:paddingRight="6dp"
             android:paddingBottom="6dp"
-            android:text="Check for update"
-            app:layout_constraintEnd_toStart="@+id/button2" />
+            android:text="Check for update" />
 
         <Button
             android:id="@+id/button2"
@@ -70,8 +69,7 @@
             android:paddingRight="6dp"
             android:paddingBottom="6dp"
             android:text="Update"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEnd="@+id/button1" />
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -100,8 +98,7 @@
             android:gravity="left"
             android:text="DOWNLOAD\nPROGRESS"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEnd="@+id/progressBar1" />
+            android:textStyle="bold" />
 
         <ProgressBar
             android:id="@+id/progressBar1"
@@ -109,8 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            app:layout_constraintStart_toEnd="@+id/textView2" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
