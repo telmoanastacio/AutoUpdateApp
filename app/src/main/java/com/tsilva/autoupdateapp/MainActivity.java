@@ -13,6 +13,8 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity
 {
     Update updateLib;
+    byte[] data;
+    DownloadFileContent downloadFileContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,24 +54,48 @@ public class MainActivity extends AppCompatActivity
         linearLayout2.setVisibility(View.VISIBLE);
         ProgressBar progressBar1 = findViewById(R.id.progressBar1);
         System.out.println("=== DOWNLOADING UPDATE ===");
-        DownloadFileContent downloadFileContent = new DownloadFileContent();
+        downloadFileContent = new DownloadFileContent();
         downloadFileContent.setSizeBytes(updateLib.getLastVersionSize());
         downloadFileContent.setProgressBar(progressBar1);
-        byte[] data = null;
-        try
+        data = null;
+        Thread downloadFileContentThread = new Thread()
         {
-            data = downloadFileContent.execute(updateLib.getLastVersionUrl()).get();
-        }
-        catch(InterruptedException | ExecutionException e)
+            @Override
+            public void run()
+            {
+                try
+                {
+                    data = downloadFileContent.execute(updateLib.getLastVersionUrl()).get();
+                }
+                catch(InterruptedException | ExecutionException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
+        downloadFileContentThread.setName("downloadFileContent");
+        downloadFileContentThread.start();
+
+        Thread threadDoAfterComplete = new Thread()
         {
-            e.printStackTrace();
-        }
-//        System.out.println("===DATA===\n\n");
-//        for(byte bin : data)
-//        {
-//            System.out.print((char) bin);
-//        }
-//        System.out.println("\n\n===END DATA===");
+            @Override
+            public void run()
+            {
+                while(!downloadFileContent.isComplete() || data == null)
+                {}
+                System.out.println("=== OUT OF WAIT LOOP ===");
+                // put instructions
+//                for(byte b : data)
+//                {
+//                    System.out.print((char) b);
+//                }
+                // TODO: install downloaded apk
+                // insert code here
+            }
+        };
+        threadDoAfterComplete.setName("thread-complete-listener");
+        threadDoAfterComplete.start();
+
         System.out.println("=== FINISHED DOWNLOADING UPDATE ===");
     }
 }

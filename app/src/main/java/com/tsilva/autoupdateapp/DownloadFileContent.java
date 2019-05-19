@@ -14,8 +14,9 @@ import java.net.URLConnection;
 public class DownloadFileContent extends AsyncTask<String, String, byte[]>
 {
     private int sizeBytes;
-    ProgressBar progressBar1 = null;
-    int progress = 0;
+    private ProgressBar progressBar1 = null;
+    private int progress = 0;
+    private boolean isComplete = false;
 
     public DownloadFileContent()
     {}
@@ -37,7 +38,7 @@ public class DownloadFileContent extends AsyncTask<String, String, byte[]>
             int fileLength = connection.getContentLength();
             progressBar1.setMax(fileLength);
             progressBar1.setProgress(0);
-            System.out.println("=== FILE SIZE ===" + getSizeBytes());
+            System.out.println("=== FILE SIZE === " + getSizeBytes());
             InputStream input = new BufferedInputStream(url.openStream(), getSizeBytes());
 
             OutputStream output = new ByteArrayOutputStream(fileLength);
@@ -51,7 +52,8 @@ public class DownloadFileContent extends AsyncTask<String, String, byte[]>
 
                 output.write(data, 0, count);
             }
-
+            isComplete = true;
+            System.out.println("=== IS COMPLETE === " + isComplete());
             input.close();
 
             return ((ByteArrayOutputStream) output).toByteArray();
@@ -83,5 +85,15 @@ public class DownloadFileContent extends AsyncTask<String, String, byte[]>
     public void setProgressBar(ProgressBar progressBar)
     {
         this.progressBar1 = progressBar;
+    }
+
+    public boolean isComplete()
+    {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete)
+    {
+        isComplete = complete;
     }
 }
