@@ -10,6 +10,8 @@ import java.util.List;
 public class Update
 {
     private String appVersion = "";
+    private String lastVersion = "";
+    private String lastVersionUrl = "";
 
     public Update()
     {}
@@ -57,8 +59,28 @@ public class Update
             }
         }
 
+        if(isCurrentVersionLower)
+        {
+            lastVersion = versionList.get(lastElement);
+            lastVersionUrl = jsonData.getVersionUrlMap().get(lastVersion);
+        }
+        else
+        {
+            lastVersion = appVersion;
+        }
         return isCurrentVersionLower;
     }
 
     //TODO: get content and unzip
+
+
+    public String getLastVersion()
+    {
+        return lastVersion;
+    }
+
+    public String getLastVersionUrl()
+    {
+        return lastVersionUrl;
+    }
 }
