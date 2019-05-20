@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity
             textView1.setText("current version: "
                     + updateLib.getCurrentVersion(getApplicationContext())
                     + "\nupdate available: " + updateLib.getLastVersion());
+            Button button2 = findViewById(R.id.button2);
+            button2.setEnabled(true);
+            button2.setVisibility(View.VISIBLE);
         }
-        Button button2 = findViewById(R.id.button2);
-        button2.setEnabled(true);
-        button2.setVisibility(View.VISIBLE);
     }
 
     public void update(View view)
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity
 //                {
 //                    System.out.print((char) b);
 //                }
-                // TODO: install downloaded apk
                 // insert code here
+                // update functions
 
 //                filename = "AutoUpdateApp.apk";
 //                folder = getFilesDir().toString() + File.separator;
