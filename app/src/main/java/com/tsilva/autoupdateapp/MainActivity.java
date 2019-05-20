@@ -1,5 +1,7 @@
 package com.tsilva.autoupdateapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -91,6 +93,11 @@ public class MainActivity extends AppCompatActivity
 //                }
                 // TODO: install downloaded apk
                 // insert code here
+
+                Intent promptInstall = new Intent(Intent.ACTION_VIEW)
+                        .setDataAndType(Uri.parse("content:///path/to/your.apk"),
+                                "application/vnd.android.package-archive");
+                startActivity(promptInstall);
             }
         };
         threadDoAfterComplete.setName("thread-complete-listener");
